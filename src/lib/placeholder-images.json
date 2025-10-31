@@ -1,0 +1,28 @@
+{
+  "placeholderImages": [
+    {
+      "id": "resume-template-fresher",
+      "description": "Clean and simple resume template for freshers.",
+      "imageUrl": "https://images.unsplash.com/photo-1578016981482-d4dd3db297b1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxyZXN1bWUlMjB0ZW1wbGF0ZXxlbnwwfHx8fDE3NjE4NTg5MTl8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "resume template"
+    },
+    {
+      "id": "resume-template-experienced",
+      "description": "Professional resume template for experienced individuals.",
+      "imageUrl": "https://images.unsplash.com/photo-1759215524566-8aea4761a926?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxkb2N1bWVudCUyMHByb2Zlc3Npb25hbHxlbnwwfHx8fDE3NjE4Njg4OTd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "document professional"
+    },
+    {
+      "id": "resume-template-designer",
+      "description": "Visual and creative resume template for designers.",
+      "imageUrl": "https://images.unsplash.com/photo-1683818051102-dd1199d163b9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxkZXNpZ24lMjBwb3J0Zm9saW98ZW58MHx8fHwxNzYxNzgyODY2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "design portfolio"
+    },
+    {
+      "id": "resume-template-sai-tharik",
+      "description": "Modern developer resume for 'Sai Tharik'.",
+      "imageUrl": "https://images.unsplash.com/photo-1614414550670-e4c1e1f51d7d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxyZXN1bWUlMjB0ZWNofGVufDB8fHx8MTc2MTg2ODg5N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "resume tech"
+    }
+  ]
+}
