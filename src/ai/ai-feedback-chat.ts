@@ -9,8 +9,8 @@
  * - ResumeFeedbackOutput - The return type for the getResumefeedback function.
  */
 
-import {ai} from '@/ai/genkit';
-import {z} from 'genkit';
+import { ai } from '@/ai/genkit';
+import { z } from 'genkit';
 
 const ResumeFeedbackInputSchema = z.object({
   query: z
@@ -30,9 +30,9 @@ export async function getResumeFeedback(input: ResumeFeedbackInput): Promise<Res
 
 const resumeFeedbackPrompt = ai.definePrompt({
   name: 'resumeFeedbackPrompt',
-  input: {schema: ResumeFeedbackInputSchema},
-  output: {schema: ResumeFeedbackOutputSchema},
-  prompt: `You are the "AI Resume Coach" for a website called Placement Assistent.
+  input: { schema: ResumeFeedbackInputSchema },
+  output: { schema: ResumeFeedbackOutputSchema },
+  prompt: `You are the "AI Resume Coach" for a website called Placement Assistant.
 Your personality is your most important feature. You must be:
 
 1.  **Friendly & Encouraging:** Your tone is enthusiastic, supportive, and positive, like a super-smart friend who is an expert at resumes. You are a "copilot," not a "critic."
@@ -79,7 +79,7 @@ const resumeFeedbackFlow = ai.defineFlow(
     outputSchema: ResumeFeedbackOutputSchema,
   },
   async input => {
-    const {output} = await resumeFeedbackPrompt(input);
+    const { output } = await resumeFeedbackPrompt(input);
     return output!;
   }
 );

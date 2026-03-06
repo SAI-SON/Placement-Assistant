@@ -57,8 +57,8 @@ export function AppSidebar() {
           className={cn("flex items-center gap-2")}
         >
           <Link href="/" className="flex items-center gap-2 font-bold">
-              <Rocket className="size-7 text-primary" />
-              <span className={cn("text-xl", !open && "hidden")}>Placement Assistent</span>
+            <Rocket className="size-7 text-primary" />
+            <span className={cn("text-xl", !open && "hidden")}>Placement Assistant</span>
           </Link>
         </motion.div>
       </SidebarHeader>

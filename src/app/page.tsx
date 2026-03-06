@@ -45,7 +45,7 @@ export default function Home() {
                 transition={{ duration: 0.7, delay: 0.2 }}
                 className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-4"
               >
-                Welcome to Placement Assistent
+                Welcome to Placement Assistant
               </motion.h1>
               <motion.p
                 initial={{ opacity: 0 }}
@@ -78,7 +78,7 @@ export default function Home() {
               <motion.div variants={{ visible: { opacity: 1, y: 0 }, hidden: { opacity: 0, y: 20 } }}>
                 <GlassmorphismCard className="h-full">
                   <CardHeader>
-                    <CardTitle className="flex items-center gap-3 text-xl"><UploadCloud className="text-primary"/> Instant Resume Analysis</CardTitle>
+                    <CardTitle className="flex items-center gap-3 text-xl"><UploadCloud className="text-primary" /> Instant Resume Analysis</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-muted-foreground mb-4">
@@ -94,7 +94,7 @@ export default function Home() {
               <motion.div variants={{ visible: { opacity: 1, y: 0 }, hidden: { opacity: 0, y: 20 } }}>
                 <GlassmorphismCard className="h-full">
                   <CardHeader>
-                    <CardTitle className="flex items-center gap-3 text-xl"><Bot className="text-primary"/> AI Resume Coach</CardTitle>
+                    <CardTitle className="flex items-center gap-3 text-xl"><Bot className="text-primary" /> AI Resume Coach</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-muted-foreground mb-4">
