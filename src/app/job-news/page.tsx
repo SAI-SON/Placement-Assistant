@@ -123,7 +123,7 @@ export default function JobNewsPage() {
       <a href={article.url} target="_blank" rel="noopener noreferrer" className="block hover:bg-muted/30 p-3 rounded-lg transition-colors">
           {article.urlToImage && (
               <div className="relative w-full h-40">
-                  <Image src={article.urlToImage} alt={article.title} layout="fill" objectFit="cover" className="opacity-80"/>
+                  <Image src={article.urlToImage} alt={article.title} fill unoptimized className="object-cover opacity-80 rounded-t-lg"/>
               </div>
           )}
           <CardHeader>

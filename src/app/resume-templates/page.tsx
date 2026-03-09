@@ -28,13 +28,13 @@ const GlassmorphismCard = ({ children, className, ...props }: React.ComponentPro
   );
 
 const initialFormData = {
-    name: "Sai Tharik",
+    name: "Sai",
     role: "Full Stack Developer | AI Enthusiast",
     email: "saitharik@email.com",
     phone: "+91-9876543210",
     location: "Chennai, India",
     linkedin: "linkedin.com/in/saitharik",
-    portfolio: "saitharik.dev",
+    portfolio: "sai.dev",
     degree: "B.Tech in Computer Science and Engineering",
     institution: "XYZ University",
     educationYear: "2022–2026",

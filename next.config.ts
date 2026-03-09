@@ -1,5 +1,5 @@
 
-import type {NextConfig} from 'next';
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   /* config options here */
@@ -90,6 +90,29 @@ const nextConfig: NextConfig = {
         pathname: '/**',
       }
     ],
+  },
+  // Fix: @genkit-ai/google-genai uses ESM directory imports (./googleai)
+  // which strict ESM forbids. 'loose' mode allows this.
+  experimental: {
+    esmExternals: 'loose',
+  },
+  // Keep all genkit packages as server-external (never bundled by webpack)
+  serverExternalPackages: [
+    'genkit',
+    '@genkit-ai/google-genai',
+    '@genkit-ai/core',
+    '@genkit-ai/next',
+    '@genkit-ai/google-genai/googleai',
+  ],
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      // Stub optional genkit dependency that isn't installed
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        '@genkit-ai/firebase': false,
+      };
+    }
+    return config;
   },
 };
 

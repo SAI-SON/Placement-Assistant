@@ -1,0 +1,14 @@
+diff --git a/node_modules/@genkit-ai/google-genai/lib/index.mjs b/node_modules/@genkit-ai/google-genai/lib/index.mjs
+index 99706f9..4dc1698 100644
+--- a/node_modules/@genkit-ai/google-genai/lib/index.mjs
++++ b/node_modules/@genkit-ai/google-genai/lib/index.mjs
+@@ -1,7 +1,7 @@
+ import {
+   googleAI
+-} from "./googleai";
+-import { vertexAI } from "./vertexai";
++} from "./googleai/index.mjs";
++import { vertexAI } from "./vertexai/index.mjs";
+ export {
+   googleAI,
+   vertexAI

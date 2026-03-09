@@ -1,0 +1,1069 @@
+================================================================================
+  PLACEMENT ASSISTANT — COMPLETE DEEP PROJECT PROMPT
+  Use this file to fully duplicate, understand, or extend this application.
+  Every detail needed to rebuild from scratch is included below.
+================================================================================
+
+--------------------------------------------------------------------------------
+SECTION 1: PROJECT IDENTITY
+--------------------------------------------------------------------------------
+
+  Name        : Placement Assistant
+  Type        : Full-Stack AI-Powered Web Application
+  Framework   : Next.js 15 (App Router + Server Actions + API Routes)
+  Language    : TypeScript (strict)
+  Styling     : Tailwind CSS v3 + shadcn/ui component library
+  AI Engine   : Google Genkit v1.16 + Gemini 2.0 Flash Lite
+  Dev Port    : 9002
+  Theme       : Forced dark mode, purple-violet glassmorphism
+
+  PURPOSE:
+    An all-in-one AI-powered placement preparation platform for engineering and
+    CS students in India. Helps users analyze resumes, practice interviews,
+    explore career paths, generate professional resumes, watch skill tutorials,
+    and find local job news — all using Gemini AI and real external APIs.
+
+--------------------------------------------------------------------------------
+SECTION 2: COMPLETE TECH STACK
+--------------------------------------------------------------------------------
+
+  RUNTIME & FRAMEWORK:
+    next@^15.5.6                      App Router, Server Actions, API Routes
+    react@^18.3.1                     UI library
+    react-dom@^18.3.1
+    typescript@^5                     Static typing
+
+  AI / GENKIT:
+    genkit@^1.16.1                    AI orchestration framework
+    @genkit-ai/google-genai@^1.16.1   Google Gemini plugin for Genkit
+    @genkit-ai/next@^1.16.1           Next.js adapter for Genkit
+    genkit-cli@^0.0.2                 Dev CLI for testing flows
+    MODEL: googleai/gemini-2.0-flash-lite   (free tier, 30 RPM, 1500/day)
+
+  UI COMPONENTS (shadcn/ui — Radix UI based):
+    @radix-ui/react-accordion
+    @radix-ui/react-alert-dialog
+    @radix-ui/react-avatar
+    @radix-ui/react-checkbox
+    @radix-ui/react-collapsible
+    @radix-ui/react-dialog
+    @radix-ui/react-dropdown-menu
+    @radix-ui/react-label
+    @radix-ui/react-menubar
+    @radix-ui/react-popover
+    @radix-ui/react-progress
+    @radix-ui/react-radio-group
+    @radix-ui/react-scroll-area
+    @radix-ui/react-select
+    @radix-ui/react-separator
+    @radix-ui/react-slider
+    @radix-ui/react-slot
+    @radix-ui/react-switch
+    @radix-ui/react-tabs
+    @radix-ui/react-toast
+    @radix-ui/react-tooltip
+    class-variance-authority@^0.7.1   CVA for component variants
+    clsx@^2.1.1                       Class merging utility
+    tailwind-merge@^3.0.1             Tailwind class deduplication
+    tailwindcss-animate@^1.0.7        Animation plugin
+    lucide-react@^0.475.0             Icon set
+
+  ANIMATION:
+    framer-motion@^11.2.10            Page transitions, stagger, spring animations
+
+  FILE HANDLING & FORMS:
+    react-dropzone@^14.2.3            Drag-and-drop resume upload
+    react-hook-form@^7.54.2           Form state
+    @hookform/resolvers@^4.1.3        Zod resolver for forms
+    zod@^3.24.2                       Schema validation (also Genkit I/O)
+
+  RESUME GENERATION & PDF EXPORT:
+    react-markdown@^9.0.1             Render AI-generated markdown resume
+    jspdf@^4.2.0                      Export resume as multi-page PDF
+    html2canvas@^1.4.1                Canvas snapshot for PDF rendering
+
+  CHARTS & DATA:
+    recharts@^2.15.1                  Radial gauge for resume score
+    date-fns@^3.6.0                   Article date grouping (Today/Yesterday/etc.)
+    embla-carousel-react@^8.6.0       Carousel component (available, not used yet)
+
+  UTILITIES:
+    dotenv@^16.5.0                    Env loading for scripts
+    patch-package@^8.0.0              Patching node_modules if needed
+    react-intersection-observer@^9    Scroll-based visibility hook
+
+  DEV DEPENDENCIES:
+    @tailwindcss/typography@^0.5.13   Prose styles for markdown resume
+    postcss@^8
+    tailwindcss@^3.4.1
+    @types/node@^20
+    @types/react@^18
+    @types/react-dom@^18
+
+  EXTERNAL APIS:
+    NewsAPI (newsapi.org)             Job news by state/district in India
+    YouTube Data API v3               Tutorial video search per skill topic
+    Google Generative Language API    All AI features via Genkit
+
+--------------------------------------------------------------------------------
+SECTION 3: ENVIRONMENT VARIABLES (.env.local)
+--------------------------------------------------------------------------------
+
+  # Google Gemini / Genkit AI
+  GOOGLE_GENAI_API_KEY=AIzaSyCJ-ufdwXgPG8GMpA7LdfQG_drq3Dkufbo
+  GEMINI_API_KEY=AIzaSyCJ-ufdwXgPG8GMpA7LdfQG_drq3Dkufbo
+
+  # News API (newsapi.org)
+  NEWS_API_KEY=44d1f43831104d6bb3eb38e9f67a1695
+
+  # YouTube Data API v3
+  YOUTUBE_API_KEY=AIzaSyCfSK2L2RUACD3F1sL5SlDTLlqPfPtqkK0
+
+  NOTES:
+    - GOOGLE_GENAI_API_KEY is read by the @genkit-ai/google-genai plugin
+    - GEMINI_API_KEY is the fallback alias the plugin also checks
+    - Both are set to same value for maximum compatibility
+    - NEVER use gemini-2.0-flash (requires billing, free tier limit=0)
+    - NEVER use gemini-2.5-flash (not publicly released yet)
+    - USE: gemini-2.0-flash-lite (free tier, sufficient for all features)
+    - All keys are server-side only — never exposed to the browser
+
+--------------------------------------------------------------------------------
+SECTION 4: COLOR SYSTEM & DESIGN TOKENS
+--------------------------------------------------------------------------------
+
+  FILE: src/app/globals.css
+  The app uses CSS custom properties mapped to HSL values.
+  The <html> tag has class="dark" hardcoded — only dark theme exists.
+
+  ┌─────────────────────────────────────────────────────────────────────────┐
+  │  TOKEN                   HSL VALUE              HEX APPROX    PURPOSE  │
+  ├─────────────────────────────────────────────────────────────────────────┤
+  │  --background            255 11% 10%            #18171c       Page bg  │
+  │  --foreground            0 0% 98%               #fafafa       Text     │
+  │  --card                  270 4% 8%              #111014       Card bg  │
+  │  --card-foreground       0 0% 98%               #fafafa       Card txt │
+  │  --popover               270 4% 8%              #111014       Popover  │
+  │  --popover-foreground    0 0% 98%               #fafafa               │
+  │  --primary               262 72% 66%            #9b5de5       Purple   │
+  │  --primary-foreground    0 0% 98%               #fafafa       On purpl │
+  │  --secondary             255 11% 20%            #2e2c38       Sec bg   │
+  │  --secondary-foreground  0 0% 98%               #fafafa               │
+  │  --muted                 255 11% 25%            #3a3845       Muted bg │
+  │  --muted-foreground      0 0% 60%               #999999       Subtxt   │
+  │  --accent                262 72% 75%            #b07ef0       Lt purpl │
+  │  --accent-foreground     0 0% 98%               #fafafa               │
+  │  --destructive           0 63% 31%              #820000       Error    │
+  │  --destructive-foreground 0 0% 98%              #fafafa               │
+  │  --border                255 11% 25%            #3a3845       Borders  │
+  │  --input                 255 11% 15%            #242230       Inputs   │
+  │  --ring                  262 72% 66%            #9b5de5       Focus    │
+  │  --radius                0.75rem                             Corners  │
+  ├─────────────────────────────────────────────────────────────────────────┤
+  │  SIDEBAR-SPECIFIC TOKENS                                               │
+  │  --sidebar-background    270 4% 8%              #111014               │
+  │  --sidebar-foreground    0 0% 80%               #cccccc               │
+  │  --sidebar-primary       262 72% 66%            #9b5de5               │
+  │  --sidebar-primary-fg    0 0% 98%               #fafafa               │
+  │  --sidebar-accent        255 11% 15%            #242230               │
+  │  --sidebar-accent-fg     0 0% 98%               #fafafa               │
+  │  --sidebar-border        255 11% 20%            #2e2c38               │
+  │  --sidebar-ring          262 72% 66%            #9b5de5               │
+  └─────────────────────────────────────────────────────────────────────────┘
+
+  ADDITIONAL UI COLORS (Tailwind standard, used directly in classes):
+    Severity badges in resume analysis:
+      Critical    → bg-red-900/20    border-red-500/30    Badge variant="critical"
+      High Impact → bg-yellow-900/20 border-yellow-500/30 Badge variant="warning"
+      Suggestion  → bg-green-900/20  border-green-500/30  Badge variant="success"
+
+    Analysis results:
+      "What We Loved" checkmarks  → text-green-300
+      "What's Holding You Back"   → text-yellow-300  (AlertTriangle icon: text-yellow-400)
+      "What We Loved" icon        → ThumbsUp className="text-green-400"
+
+  TAILWIND CONFIG (tailwind.config.ts):
+    darkMode: ['class']
+    All color tokens mapped via: hsl(var(--token-name))
+    Border radius:
+      lg → var(--radius)         = 0.75rem
+      md → calc(var(--radius) - 2px) = 0.625rem
+      sm → calc(var(--radius) - 4px) = 0.5rem
+    Animations:
+      accordion-down: height 0 → radix-accordion-content-height (0.2s ease-out)
+      accordion-up:   reverse of above
+    Plugins:
+      tailwindcss-animate
+      @tailwindcss/typography
+
+  TYPOGRAPHY (tailwind.config.ts fontFamily):
+    body    : ['Alegreya', 'serif']    ← config setting (overridden by Inter in practice)
+    headline: ['Belleza', 'sans-serif']
+    code    : ['monospace']
+    ACTUAL FONT USED IN APP: Inter (loaded via next/font/google in layout.tsx)
+      const inter = Inter({ subsets: ['latin'] });
+      Applied via: className={`${inter.className} antialiased`} on <body>
+
+  GLASSMORPHISM CARD PATTERN (used on every page):
+    className="bg-card/50 backdrop-blur-xl border-white/10 rounded-2xl shadow-lg
+               transition-all duration-300 hover:border-white/20 hover:shadow-primary/10"
+    This is defined as a local GlassmorphismCard wrapper component in each page.
+
+  GRADIENT HEADINGS (used on Dashboard, Career Pathway, Resume Builder):
+    className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent"
+    → Gradient from #9b5de5 (primary purple) to #b07ef0 (lighter accent purple)
+
+  PROSE (react-markdown for rendered resumes):
+    Classes: "prose prose-sm prose-invert"
+    Custom prose-invert overrides in globals.css:
+      --tw-prose-body       : gray-300
+      --tw-prose-headings   : white
+      --tw-prose-bold       : white
+      --tw-prose-code       : white
+      --tw-prose-pre-bg     : gray-900
+
+--------------------------------------------------------------------------------
+SECTION 5: PROJECT FILE STRUCTURE (COMPLETE)
+--------------------------------------------------------------------------------
+
+  D:\Placement\Placement-Assistant\
+  ├── .env.local                        ← API keys (gitignored)
+  ├── .gitignore
+  ├── next.config.ts                    ← Next.js config (webpack fixes, serverExternalPackages)
+  ├── package.json                      ← Scripts + all dependencies
+  ├── tailwind.config.ts                ← Design tokens + plugins
+  ├── postcss.config.mjs
+  ├── tsconfig.json
+  ├── components.json                   ← shadcn/ui config
+  ├── apphosting.yaml                   ← Firebase App Hosting config
+  ├── prompt.txt                        ← THIS FILE
+  └── src/
+      ├── ai/
+      │   ├── genkit.ts                 ← Genkit init + googleAI plugin
+      │   ├── ai-feedback-chat.ts       ← AI Resume Coach prompt + flow
+      │   ├── dev.ts                    ← Genkit dev server entry
+      │   └── flows/
+      │       ├── resume-scoring-and-feedback.ts
+      │       ├── interview-coach.ts
+      │       ├── resume-generator.ts
+      │       └── personalized-learning-suggestions.ts
+      ├── app/
+      │   ├── globals.css               ← CSS tokens, dark theme, prose styles
+      │   ├── layout.tsx                ← Root layout: font, dark class, SidebarProvider
+      │   ├── page.tsx                  ← Dashboard / Home
+      │   ├── loading.tsx               ← Global loading state
+      │   ├── favicon.ico
+      │   ├── upload-resume/
+      │   │   └── page.tsx             ← Resume upload + AI analysis + results
+      │   ├── resume-templates/
+      │   │   └── page.tsx             ← AI Resume Builder + PDF export
+      │   ├── ai-coach/
+      │   │   └── page.tsx             ← AI Resume Coach chat
+      │   ├── ai-interview-coach/
+      │   │   └── page.tsx             ← Full interview simulation
+      │   ├── career-pathway/
+      │   │   └── page.tsx             ← Skill explorer + YouTube + hiring
+      │   ├── job-news/
+      │   │   └── page.tsx             ← Location-based job news
+      │   └── api/
+      │       ├── news/
+      │       │   └── route.ts         ← GET /api/news proxy → NewsAPI
+      │       └── youtube-search/
+      │           └── route.ts         ← GET /api/youtube-search proxy → YouTube
+      ├── components/
+      │   ├── app/
+      │   │   ├── sidebar.tsx          ← Animated collapsible sidebar
+      │   │   ├── header.tsx           ← App header with sidebar trigger
+      │   │   └── score-chart.tsx      ← Radial gauge chart (recharts)
+      │   └── ui/                      ← All shadcn/ui components:
+      │       accordion, alert, alert-dialog, avatar, badge, button, card,
+      │       carousel, checkbox, collapsible, command, dialog, dropdown-menu,
+      │       form, input, label, menubar, popover, progress, radio-group,
+      │       scroll-area, select, separator, sheet, sidebar, skeleton, slider,
+      │       switch, table, tabs, textarea, toast, toaster, toggle, tooltip
+      ├── hooks/
+      │   ├── use-toast.ts             ← Toast notification hook
+      │   └── use-mobile.tsx           ← Mobile breakpoint detection
+      └── lib/
+          ├── actions.ts               ← All Next.js Server Actions
+          ├── utils.ts                 ← cn() = clsx + tailwind-merge
+          ├── location-data.ts         ← All Indian states + districts map
+          ├── skills-data.ts           ← Skill chips for Career Pathway page
+          └── company-data.ts          ← Hiring companies mapped to skills
+
+--------------------------------------------------------------------------------
+SECTION 6: SIDEBAR NAVIGATION
+--------------------------------------------------------------------------------
+
+  FILE: src/components/app/sidebar.tsx
+  Component: <AppSidebar />
+  Wraps shadcn/ui Sidebar, SidebarContent, SidebarHeader, SidebarMenu
+
+  NAVIGATION ITEMS (in order):
+  ┌────┬───────────────────┬──────────────────────┬──────────────────────┐
+  │ #  │ Label             │ Route                │ Icon (lucide-react)  │
+  ├────┼───────────────────┼──────────────────────┼──────────────────────┤
+  │ 1  │ Dashboard         │ /                    │ LayoutDashboard      │
+  │ 2  │ Upload Resume     │ /upload-resume        │ UploadCloud          │
+  │ 3  │ Resume Templates  │ /resume-templates     │ FileText             │
+  │ 4  │ AI Resume Coach   │ /ai-coach             │ Bot                  │
+  │ 5  │ Interview Coach   │ /ai-interview-coach   │ Mic                  │
+  │ 6  │ Career Pathway    │ /career-pathway       │ Compass              │
+  │ 7  │ Local Job News    │ /job-news             │ Newspaper            │
+  └────┴───────────────────┴──────────────────────┴──────────────────────┘
+
+  ACTIVE STATE INDICATOR:
+    Uses framer-motion layoutId="active-tab-indicator"
+    A 1px-wide vertical bar on the left side of active item
+    Color: bg-primary (#9b5de5)
+    Animation: spring { stiffness: 300, damping: 30 }
+
+  HEADER:
+    Rocket icon (text-primary) + "Placement Assistant" text
+    Hidden when sidebar is collapsed (uses useSidebar().open)
+
+  ANIMATIONS:
+    Each menu item: initial={{ opacity:0, x:-20 }} → animate={{ opacity:1, x:0 }}
+    Stagger: delay = 0.3 + index * 0.1s
+
+--------------------------------------------------------------------------------
+SECTION 7: ROOT LAYOUT (src/app/layout.tsx)
+--------------------------------------------------------------------------------
+
+  - Imports Inter font from next/font/google, subset: 'latin'
+  - Sets <html lang="en" className="dark"> (forced dark mode)
+  - Applies inter.className + antialiased on <body>
+  - Wraps entire app in <SidebarProvider>
+  - Layout structure:
+      <html dark>
+        <body inter antialiased>
+          <SidebarProvider>
+            <div flex min-h-screen bg-background text-foreground>
+              <AppSidebar />
+              <SidebarInset>
+                <div flex flex-1 min-h-screen>
+                  <div flex-1 flex flex-col overflow-auto>
+                    {children}
+                  </div>
+                </div>
+              </SidebarInset>
+            </div>
+          </SidebarProvider>
+          <Toaster />
+        </body>
+      </html>
+
+  Metadata:
+    title: 'Placement Assistant'
+    description: 'AI-powered career assistance and feedback.'
+
+--------------------------------------------------------------------------------
+SECTION 8: PAGE-BY-PAGE COMPLETE FUNCTIONALITY
+--------------------------------------------------------------------------------
+
+════════════════════════════════════════════════
+8.1  DASHBOARD  ( / )
+════════════════════════════════════════════════
+FILE: src/app/page.tsx
+
+  LAYOUT: Full width, centered, padded (p-4 md:p-6 lg:p-8)
+
+  HERO SECTION:
+    - Rounded card (rounded-3xl) with bg-gradient-to-br from-card to-background
+    - Heading: "Welcome to Placement Assistant"
+      gradient text: from-primary (#9b5de5) to-accent (#b07ef0)
+      sizes: text-4xl md:text-5xl lg:text-6xl font-bold
+    - Subtext: "Your AI copilot for crafting a job-winning resume..."
+      color: text-muted-foreground, max-w-3xl
+    - CTA Button: "Get Started →" → links to /upload-resume
+      Style: rounded-full, size="lg", bg-primary, hover:scale-105
+
+  FEATURE CARDS (2-column grid on md+):
+    Card 1 — "Instant Resume Analysis"
+      Icon: UploadCloud (text-primary)
+      Description: Upload resume → AI score + detailed feedback
+      Button: "Analyze Now" → /upload-resume
+
+    Card 2 — "AI Resume Coach"
+      Icon: Bot (text-primary)
+      Description: Chat with AI coach for personalized advice
+      Button: "Ask the Coach" → /ai-coach
+
+  ANIMATIONS (framer-motion):
+    Page: initial={{ opacity:0, y:20 }} → animate={{ opacity:1, y:0 }} 0.5s
+    Heading: delay 0.2s, y from -20
+    Subtext: delay 0.4s, opacity only
+    CTA: delay 0.6s, scale from 0.8
+    Cards grid: delay 0.8s
+
+════════════════════════════════════════════════
+8.2  UPLOAD RESUME  ( /upload-resume )
+════════════════════════════════════════════════
+FILE: src/app/upload-resume/page.tsx
+
+  STATE VARIABLES:
+    resumeFile       : File | null
+    isPending        : boolean (useTransition)
+    analysis         : ResumeScoringAndFeedbackOutput | null
+    learningSuggestions : { videoSuggestions: string[] } | null
+
+  USER FLOW:
+    STEP 1 — UPLOAD VIEW (shown when analysis === null):
+      Left side — Drop zone card:
+        - react-dropzone handles drag/drop
+        - Accepted: application/pdf (.pdf), .docx (max 4MB)
+        - Validation:
+            file.type !== 'application/pdf' AND !== docx → toast error
+            file.size > 4MB → toast error
+        - When file selected: shows CheckCircle2 icon + filename
+        - When dragging: bg-primary/20 border-primary, text "Drop it like it's hot!"
+        - Analyze button: disabled if no file or pending
+          bg-primary hover:bg-primary/90 hover:scale-105, rounded-lg text-lg py-6
+
+      Right side — Features list:
+        3 bullet points with icon+text:
+          Search icon  → "Keyword Match"
+          BarChart2    → "Impact & Metrics"
+          FileCheck    → "Formatting & Readability"
+
+    STEP 2 — ANALYSIS (server action called):
+      1. File read as base64 DataURI (FileReader.readAsDataURL)
+      2. analyzeResumeAction({ resumeDataUri }) called
+      3. If score < 70 → also calls getLearningSuggestionsAction
+      4. Success toast: "Analysis Complete!"
+
+    STEP 3 — RESULTS VIEW (shown when analysis !== null):
+      Section A — Score Card:
+        Glassmorphism card with <ScoreChart score={analysis.score} />
+        Plus summary text: analysis.summary
+
+      Section B — Two-column grid:
+        Left card  — "What We Loved" (ThumbsUp icon text-green-400)
+          List items prefixed with ✓ in text-green-300
+        Right card — "What's Holding You Back" (AlertTriangle text-yellow-400)
+          List items prefixed with ! in text-yellow-300
+
+      Section C — "Your Quick-Win Checklist":
+        Each improvement item has:
+          Badge (Critical/High Impact/Suggestion) based on title keywords
+          Title (stripped of parenthetical)
+          "What's Wrong:" label + text
+          "How to Fix:" label + monospace code block (bg-muted/30 p-3 rounded-md)
+          Card styling by severity:
+            Critical    → bg-red-900/20    border-red-500/30
+            High Impact → bg-yellow-900/20 border-yellow-500/30
+            Suggestion  → bg-green-900/20  border-green-500/30
+
+      Section D — "Personalized Learning" (only if score < 70):
+        YouTube icon (text-primary)
+        List of video title suggestions → links to YouTube search results
+        Each link: Youtube icon + title + ExternalLink icon
+
+      Footer:
+        "Analyze Another Resume" button (variant=secondary) → resets all state
+
+════════════════════════════════════════════════
+8.3  AI RESUME BUILDER  ( /resume-templates )
+════════════════════════════════════════════════
+FILE: src/app/resume-templates/page.tsx
+
+  LAYOUT: Two-column (lg), left = form, right = live preview
+
+  PRE-FILLED SAMPLE DATA (initialFormData):
+    name           : "Sai Tharik"
+    role           : "Full Stack Developer | AI Enthusiast"
+    email          : "saitharik@email.com"
+    phone          : "+91-9876543210"
+    location       : "Chennai, India"
+    linkedin       : "linkedin.com/in/saitharik"
+    portfolio      : "saitharik.dev"
+    degree         : "B.Tech in Computer Science and Engineering"
+    institution    : "XYZ University"
+    educationYear  : "2022–2026"
+    cgpa           : "8.7"
+    skills         : "C, C++, Java, Python, React.js, Node.js, MongoDB, Express.js, Git, Figma"
+    project1Title  : "AI-Based Traffic Sign Detection"
+    project1Desc   : "Developed an ML model using OpenCV and TensorFlow..."
+    project1Impact : "Achieved 95% detection accuracy."
+    project1Tech   : "Python, TensorFlow, OpenCV, Arduino"
+    project2Title  : "E-commerce Website (MERN)"
+    project2Desc   : "Built a responsive e-commerce platform..."
+    project2Impact : "Handled 500+ simulated transactions with <2s latency."
+    project2Tech   : "React, Node, MongoDB, Express, JWT"
+    achievements   : "Winner, Smart India Hackathon 2024\nPublished Research on AI Mobility Systems"
+
+  ON MOUNT:
+    Auto-generates resume with initialFormData immediately (useEffect)
+
+  FORM SECTIONS (all using shadcn/ui Input/Textarea/Label):
+    1. Personal Details: name, role, email, phone, location, linkedin, portfolio
+    2. Education: institution, degree, year, cgpa
+    3. Skills & Achievements: skills (comma-sep), achievements (newline-sep)
+    4. Project 1: title, description, impact, tech (comma-sep)
+    5. Project 2: title, description, impact, tech (comma-sep)
+    Submit: "Generate Resume" button (full width)
+
+  LIVE PREVIEW (right card):
+    - Scrollable div (h-[70vh] overflow-y-auto)
+    - classes: "prose prose-sm prose-invert max-w-none"
+    - Rendered via <ReactMarkdown>{generatedResume}</ReactMarkdown>
+    - ref={resumeRef} attached to this div for PDF generation
+
+  PDF EXPORT:
+    1. Clone the resume div
+    2. Position off-screen (-9999px)
+    3. Override styles: bg white, text black, remove prose-invert
+    4. html2canvas({ backgroundColor:'#ffffff', scale:2, useCORS:true })
+    5. jsPDF A4 portrait, handle multi-page with position math
+    6. pdf.save('resume.pdf')
+    7. Remove clone from DOM
+
+════════════════════════════════════════════════
+8.4  AI RESUME COACH  ( /ai-coach )
+════════════════════════════════════════════════
+FILE: src/app/ai-coach/page.tsx
+
+  LAYOUT: 2/3 + 1/3 grid on lg (chat | tips panel)
+
+  INITIAL STATE:
+    messages: [{ role:'assistant', content: "Hi Jane! I'm your AI Coach..." }]
+
+  SUGGESTED PROMPTS (chips in CardFooter):
+    "Can you check my summary?"
+    "What words should I use for a Software Engineer resume?"
+    "How do I talk about a gap in my work history?"
+    "Make this bullet point sound better: 'Handled customer calls'"
+    Clicking → sets query textarea value
+
+  CHAT UI:
+    Max height 400px, scroll area, bg-background/30
+    User messages:
+      justify-end, bg-primary text-primary-foreground, rounded-2xl
+    AI messages:
+      justify-start, Bot icon (text-primary), bg-muted, rounded-2xl
+    Loading state:
+      Bot icon + spinner + "Thinking..." text
+    AnimatePresence wraps each message:
+      initial={{ opacity:0, y:10 }} → animate={{ opacity:1, y:0 }}
+
+  TEXTAREA:
+    Placeholder: "Ask me anything about your resume..."
+    bg-background/50 border-white/10 min-h-[80px]
+    Enter (without Shift) = submit
+    Shift+Enter = new line
+    Send button (Send icon) positioned absolute right-3, center-y
+
+  QUICK TIPS CARD (right panel, hidden on mobile):
+    Title: "Quick Resume Tips" (Lightbulb icon text-primary)
+    4 tips, each with Zap icon (text-accent):
+      Action Verbs        → "Start bullet points with strong words (e.g., 'Led,' 'Achieved')."
+      Numbers are Key     → "Use numbers to show your impact (e.g., 'Increased sales by 15%')."
+      Tailor for Jobs     → "Change your resume slightly for each job you apply for."
+      Proofread Twice     → "Always check for typos!"
+
+════════════════════════════════════════════════
+8.5  AI INTERVIEW COACH  ( /ai-interview-coach )
+════════════════════════════════════════════════
+FILE: src/app/ai-interview-coach/page.tsx
+
+  MULTI-STEP INTERFACE (step 1–4):
+
+  STEP 1 — Setup (Upload + Job Description):
+    Left card:
+      Drag/drop resume (same validation as upload-resume page)
+      Shows filename when uploaded
+    Right card:
+      Textarea for job description (required)
+      Placeholder: "Paste the job description here..."
+    CTA: "Start My Interview" button (large, primary)
+    Conditions to enable: resumeFile AND jobDescription.trim() AND !isPending
+
+  STEP 2 — Questions Generated:
+    Shows list of 5 questions (numbered)
+    Each question card: question text + "Answer this question" button
+    Progress indicator shows current question / total
+
+  STEP 3 — Answering:
+    Shows current question prominently
+    Textarea for user's answer (min-h-[150px])
+    "Submit Answer" button → evaluates and moves to next
+    Cancel/Skip option
+
+  STEP 4 — Results:
+    Overall score (sum of all individual scores / total)
+    Score displayed as X/50 (5 questions × 10 points each)
+    Per-question breakdown:
+      Question text
+      User's answer
+      Score badge (x/10)
+      "What You Did Well" (green highlight)
+      "How to Improve" (yellow/amber highlight)
+    "Start Over" button to reset everything
+
+  EVALUATION RUBRIC (built into AI prompt):
+    Relevance & Focus    → 3 points (did they answer the question?)
+    Structure & Clarity  → 4 points (STAR method: Situation, Task, Action, Result)
+    Impact & Detail      → 3 points (specific examples/metrics?)
+
+════════════════════════════════════════════════
+8.6  CAREER PATHWAY HUB  ( /career-pathway )
+════════════════════════════════════════════════
+FILE: src/app/career-pathway/page.tsx
+
+  HEADING: "Career Pathway Hub"
+    gradient from-primary to-accent, with Compass icon
+
+  SKILL CHIP SELECTOR (from lib/skills-data.ts):
+    Predefined skills rendered as toggle Buttons (variant=default when active)
+    Each chip has an icon + skill name
+    Clicking a chip → sets currentTopic + searchTerm → triggers YouTube fetch
+
+  CUSTOM SEARCH:
+    Input: "Or type any skill... (e.g., 'Golang', 'Cybersecurity')"
+    Form submit → setCurrentTopic(searchTerm) → triggers YouTube fetch
+
+  YOUTUBE VIDEOS PANEL (2/3 width on lg):
+    Title: "Top Learning Videos for {currentTopic}" (Youtube icon text-primary)
+    Grid: 1 col / 2 col sm / 3 col xl
+    Each video card:
+      thumbnail image (aspect-video, relative positioned)
+      title (line-clamp-2)
+      channel name (text-xs text-muted-foreground)
+      hover: scale-105, shadow-primary/20
+      Entire card is <a> → YouTube URL, target="_blank"
+    Loading: centered spinner
+    Empty: "No videos found for '{topic}'" message
+    Error: red text message
+
+  WHO'S HIRING PANEL (1/3 width on lg):
+    Filters companies from lib/company-data.ts where
+      company.requiredSkills includes currentTopic (case-insensitive)
+    Shows up to 4 companies:
+      company.name (font-bold)
+      company.role (text-sm text-muted-foreground)
+      Card bg: bg-background/50 p-3 rounded-lg
+    Empty: "No hiring info for this skill."
+
+  NEXT STEPS PANEL:
+    Salary Insights button (DollarSign icon) — DISABLED
+      Shows stub: "Approx: ₹8-15 LPA (current)"
+    Career Roadmap button (Map icon) — DISABLED
+      Shows stub: "AI-generated path to mastery"
+
+  DATA FETCH: /api/youtube-search?topic={encoded topic}
+    Runs on mount with SKILLS[0].name
+    Re-runs whenever currentTopic changes (useEffect dep)
+
+════════════════════════════════════════════════
+8.7  LOCAL JOB NEWS  ( /job-news )
+════════════════════════════════════════════════
+FILE: src/app/job-news/page.tsx
+
+  DEFAULT VALUES: selectedState="Tamil Nadu", selectedDistrict="Madurai"
+  Auto-fetches on component mount with these defaults.
+
+  CONTROLS BAR (sticky top-16, backdrop-blur-sm, z-10):
+    Title: "Local Job News" (Newspaper icon text-primary)
+    Subtitle: "Find local news about hiring, careers, and job opportunities in your area."
+    3-column grid (sm+):
+      Col 1: State dropdown (all Indian states from location-data.ts, sorted A-Z)
+      Col 2: District dropdown (filtered by selected state, sorted A-Z, disabled until state chosen)
+      Col 3: "Find News" button (LoaderCircle spinner when loading, Search icon otherwise)
+
+  ON STATE CHANGE:
+    Clears district, articles, hasSearched flag
+
+  ARTICLE GROUPS (date-fns grouping):
+    TODAY    → isToday(parseISO(article.publishedAt))
+    YESTERDAY → isYesterday(...)
+    THIS WEEK → isThisWeek(..., { weekStartsOn: 1 })
+    OLDER    → everything else
+    Each group heading: text-lg font-bold text-foreground
+
+  NEWS CARD (per article):
+    GlassmorphismCard wrapper
+    <a href={article.url} target="_blank" rel="noopener noreferrer">
+      If urlToImage exists:
+        div relative w-full h-40
+        <Image fill unoptimized className="object-cover opacity-80 rounded-t-lg" />
+      CardHeader:
+        title: font-semibold text-base text-foreground/90 leading-tight
+        source + timeAgo: text-xs text-muted-foreground
+          formatDistanceToNow(parseISO(publishedAt)) + " ago"
+
+  STATES:
+    Loading → centered LoaderCircle w-8 h-8 animate-spin text-primary
+    Error   → red box (bg-red-500/10), AlertTriangle icon, error message
+    Empty   → muted box: "No recent job news found. Try expanding your search!"
+    Results → grid 1 / 2 md / 3 lg cols, framer-motion stagger (delay i*0.05s)
+
+  SEARCH QUERY SENT TO NEWSAPI:
+    '("jobs" OR "hiring" OR "career") AND "{district}" AND "{state}"'
+    sortBy=publishedAt, pageSize=20
+
+--------------------------------------------------------------------------------
+SECTION 9: API ROUTES
+--------------------------------------------------------------------------------
+
+  GET /api/news
+  FILE: src/app/api/news/route.ts
+    Query params: state (required), district (required)
+    Reads: process.env.NEWS_API_KEY
+    Endpoint: https://newsapi.org/v2/everything
+    Query: '("jobs" OR "hiring" OR "career") AND "{district}" AND "{state}"'
+    Params: sortBy=publishedAt, pageSize=20
+    Returns: raw NewsAPI response (articles array)
+    Errors: 400 if missing params, 500 if no API key, relay status if NewsAPI error
+
+  GET /api/youtube-search
+  FILE: src/app/api/youtube-search/route.ts
+    Query params: topic (required)
+    Reads: process.env.YOUTUBE_API_KEY
+    Endpoint: https://www.googleapis.com/youtube/v3/search
+    Params: part=snippet, type=video, maxResults=10, q="{topic} tutorial"
+    Maps response items to: { id, title, channel, thumbnail, url }
+    Returns: { videos: Video[] }
+    Errors: 400 if missing topic, 500 if no API key, relay status on YouTube error
+
+--------------------------------------------------------------------------------
+SECTION 10: AI FLOWS (GENKIT)
+--------------------------------------------------------------------------------
+
+  INIT FILE: src/ai/genkit.ts
+  ─────────────────────────────
+    import { genkit } from 'genkit';
+    import { googleAI } from '@genkit-ai/google-genai';
+
+    export const ai = genkit({
+      plugins: [googleAI({ apiKey: process.env.GOOGLE_GENAI_API_KEY })],
+      model: 'googleai/gemini-2.0-flash-lite',
+    });
+
+  ─────────────────────────────────────────────────
+  FLOW 1: Resume Scoring & Feedback
+  FILE: src/ai/flows/resume-scoring-and-feedback.ts
+  ─────────────────────────────────────────────────
+    Directive: 'use server'
+
+    INPUT SCHEMA:
+      resumeDataUri: string
+        "A resume document, as a data URI that must include MIME type and Base64 encoding.
+         Expected format: 'data:<mimetype>;base64,<encoded_data>'"
+
+    OUTPUT SCHEMA:
+      score            : number (0-100)
+      summary          : string (friendly, high-level)
+      whatWeLoved      : string[] (3-4 bullet points of strengths)
+      whatsHoldingYouBack : string[] (2-3 weaknesses)
+      improvements     : [{
+        title     : string  (e.g. "Clarify Your Work Dates (Critical)")
+        whatsWrong: string
+        howToFix  : string (with examples)
+      }]
+
+    PROMPT TEMPLATE:
+      "You are an expert resume consultant. Analyze the resume provided...
+       Resume: {{media url=resumeDataUri}}
+       Your analysis must include:
+       1. Score 0-100
+       2. Friendly summary
+       3. 'What We Loved' → 3-4 bullet points strengths
+       4. 'What's Holding You Back' → 2-3 weakness bullets
+       5. 'Quick-Win Checklist' → 2-3 improvements each with title/whatsWrong/howToFix
+       Provide response in required JSON format."
+
+  ─────────────────────────────────────────────────
+  FLOW 2: AI Resume Coach
+  FILE: src/ai/ai-feedback-chat.ts
+  ─────────────────────────────────────────────────
+    Directive: 'use server'
+
+    INPUT : { query: string }
+    OUTPUT: { feedback: string }  (markdown formatted)
+
+    PERSONALITY PROMPT:
+      Name: "AI Resume Coach" for "Placement Assistant"
+      Traits:
+        1. Friendly & Encouraging — enthusiastic, supportive, like a smart friend
+        2. Simple & Precise — everyday language, no jargon
+        3. Actionable — always Before/After examples
+        4. Analogical — explains complex ideas with analogies
+
+      RESPONSE STRUCTURE:
+        1. Acknowledge & Encourage (positive opener)
+        2. The Simple "Why" (explain weakness plainly)
+        3. The "Fix" (Before + After example in markdown list)
+        4. The "Tip" (short memorable tip for the future)
+
+      EXAMPLE INTERACTION included in prompt for style reference.
+
+  ─────────────────────────────────────────────────
+  FLOW 3: Interview Coach
+  FILE: src/ai/flows/interview-coach.ts
+  ─────────────────────────────────────────────────
+    Directive: 'use server'
+
+    FLOW A — generateQuestionsFlow:
+      INPUT : { resumeDataUri: string, jobDescription: string }
+      OUTPUT: { questions: [{ question: string, questionNumber: number }] }
+      Prompt: Generate personalized 5-question interview plan based on resume + JD
+
+    FLOW B — evaluateAnswerFlow:
+      INPUT : { question, answer, resumeDataUri, jobDescription }
+      OUTPUT: { score: number (out of 10), whatYouDidWell: string, howToImprove: string }
+      Rubric used in prompt:
+        Relevance & Focus    → 3 pts
+        Structure & Clarity  → 4 pts (STAR method)
+        Impact & Detail      → 3 pts
+      Tone: "constructive, data-driven, supportive and professional"
+
+  ─────────────────────────────────────────────────
+  FLOW 4: Resume Generator
+  FILE: src/ai/flows/resume-generator.ts
+  ─────────────────────────────────────────────────
+    Directive: 'use server'
+
+    INPUT SCHEMA:
+      name          : string
+      role          : string
+      contact       : { email, phone, location, linkedin, portfolio }
+      education     : [{ degree, institution, year, cgpa }]
+      skills        : string[]
+      projects      : [{ title, description, impact, tech: string[] }]
+      achievements  : string[]
+
+    OUTPUT SCHEMA:
+      text_resume               : string  (plain-text, ATS-friendly)
+      formatted_resume_markdown : string  (markdown for web display)
+      suggestions               : string[] (improvement suggestions)
+
+    PROMPT STYLE GUIDE (built into prompt):
+      Professional tone, concise and confident
+      Keyword-rich for software engineering roles
+      Bullet points, no emojis, no tables/columns (ATS safe)
+      Measurable results added (e.g., "Improved efficiency by 25%")
+      Includes one-line career tagline under name
+      Uses Handlebars template syntax: {{{name}}}, {{#each education}}, etc.
+
+  ─────────────────────────────────────────────────
+  FLOW 5: Personalized Learning Suggestions
+  FILE: src/ai/flows/personalized-learning-suggestions.ts
+  ─────────────────────────────────────────────────
+    Directive: 'use server'
+
+    INPUT : { resumeScore: number, areasToImprove: string }
+    OUTPUT: { videoSuggestions: string[] }
+
+    LOGIC:
+      If resumeScore >= 70 → returns { videoSuggestions: [] } (no AI call)
+      If resumeScore < 70  → calls Gemini to suggest YouTube video titles
+
+    These titles are then turned into YouTube search links:
+      https://www.youtube.com/results?search_query={encodeURIComponent(video)}
+
+--------------------------------------------------------------------------------
+SECTION 11: SERVER ACTIONS (src/lib/actions.ts)
+--------------------------------------------------------------------------------
+
+  All functions marked 'use server', consumed by client components.
+
+  analyzeResumeAction(input: ResumeScoringAndFeedbackInput)
+    → calls resumeScoringAndFeedback(input)
+    → throws: 'Failed to analyze resume. The API key might be invalid or missing.'
+
+  getLearningSuggestionsAction(input: SuggestYouTubeVideosInput)
+    → calls suggestYouTubeVideos(input)
+    → throws: 'Failed to get learning suggestions.'
+
+  generateQuestionsAction(input: { resumeDataUri, jobDescription })
+    → calls generateQuestions(input) from interview-coach.ts
+    → throws: 'Failed to generate interview questions.'
+
+  evaluateAnswerAction(input: { question, answer, resumeDataUri, jobDescription })
+    → calls evaluateAnswer(input) from interview-coach.ts
+    → throws: 'Failed to evaluate your answer.'
+
+  generateResumeAction(input: ResumeGeneratorInput)
+    → calls generateResume(input) from resume-generator.ts
+    → throws: 'Failed to generate resume.'
+
+--------------------------------------------------------------------------------
+SECTION 12: NEXT.JS CONFIG (next.config.ts)
+--------------------------------------------------------------------------------
+
+  typescript.ignoreBuildErrors: true
+  eslint.ignoreDuringBuilds: true
+
+  images.remotePatterns (allowed external image domains):
+    placehold.co, images.unsplash.com, picsum.photos,
+    media.dev.to, s.yimg.com, www.reuters.com,
+    bl-i.thgim.com, img.etimg.com, media.assettype.com,
+    blogger.googleusercontent.com, static.toiimg.com,
+    images.indianexpress.com, i.ytimg.com
+    (all with protocol: 'https', pathname: '/**')
+
+  serverExternalPackages:
+    ['genkit', '@genkit-ai/google-genai', '@genkit-ai/core', '@genkit-ai/next']
+    Reason: Prevents webpack from bundling Genkit server packages,
+            avoids optional @genkit-ai/firebase dependency resolution error
+
+  webpack (isServer only):
+    config.resolve.alias['@genkit-ai/firebase'] = false
+    Reason: Stubs the optional Firebase tracing module that @genkit-ai/core
+            tries to dynamically import but is not installed
+
+--------------------------------------------------------------------------------
+SECTION 13: PACKAGE.JSON SCRIPTS
+--------------------------------------------------------------------------------
+
+  "dev"          : "next dev -p 9002"
+    NOTE: --turbopack MUST NOT be used (breaks next/font/google resolution)
+
+  "genkit:dev"   : "genkit start -- tsx src/ai/dev.ts"
+    Starts Genkit Developer UI for testing AI flows in isolation
+
+  "genkit:watch" : "genkit start -- tsx --watch src/ai/dev.ts"
+
+  "build"        : "NODE_ENV=production next build"
+
+  "start"        : "next start"
+
+  "lint"         : "next lint"
+
+  "typecheck"    : "tsc --noEmit"
+
+--------------------------------------------------------------------------------
+SECTION 14: KNOWN BUGS & THEIR EXACT FIXES
+--------------------------------------------------------------------------------
+
+  BUG 1 — Turbopack + Google Fonts
+    ERROR : Module not found: @vercel/turbopack-next/internal/font/google/font
+    ROOT  : --turbopack flag incompatible with next/font/google (next@15)
+    FIX   : package.json: "dev": "next dev -p 9002" (remove --turbopack)
+
+  BUG 2 — Deprecated Next.js Image API
+    ERROR : layout="fill" and objectFit="cover" crash at runtime
+    ROOT  : These props were removed in Next.js 13+
+    FIX   : <Image fill unoptimized className="object-cover opacity-80"/>
+    FILES : src/app/job-news/page.tsx (line 126)
+            src/app/career-pathway/page.tsx (line 154) — same fix needed
+
+  BUG 3 — @genkit-ai/firebase missing module
+    ERROR : Module not found: Can't resolve '@genkit-ai/firebase'
+    ROOT  : @genkit-ai/core/lib/tracing.js tries to load optional Firebase dep
+    FIX   : next.config.ts serverExternalPackages + webpack alias = false
+
+  BUG 4 — Wrong Gemini model (gemini-2.5-flash)
+    ERROR : fetch failed / model not found
+    ROOT  : gemini-2.5-flash not publicly released
+    FIX   : Change to 'googleai/gemini-2.0-flash-lite' in genkit.ts
+
+  BUG 5 — Wrong Gemini model (gemini-2.0-flash)
+    ERROR : [429] Quota exceeded — limit: 0 for free_tier_requests
+    ROOT  : gemini-2.0-flash requires billing; free tier quota = 0
+    FIX   : Change to 'googleai/gemini-2.0-flash-lite' (has free tier)
+
+  BUG 6 — Corrupted .env.local
+    ERROR : ConnectTimeoutError — API key not being sent
+    ROOT  : GOOGLE_GENAI_API_KEY had literal text "npm install @google/generative-ai"
+    FIX   : Rewrite entire .env.local with correct keys
+
+  BUG 7 — API key not explicitly passed
+    ERROR : Silent failure — googleAI() can't find key in some environments
+    ROOT  : googleAI() without explicit apiKey relies on env var lookup order
+    FIX   : googleAI({ apiKey: process.env.GOOGLE_GENAI_API_KEY })
+
+--------------------------------------------------------------------------------
+SECTION 15: HOW TO RUN FROM SCRATCH
+--------------------------------------------------------------------------------
+
+  PREREQUISITES:
+    Node.js v20+
+    npm v9+
+    API Keys:
+      Google AI Studio key (Gemini): https://aistudio.google.com/apikey
+      NewsAPI key: https://newsapi.org/register
+      YouTube Data API v3: https://console.cloud.google.com → Enable API → Create Key
+
+  STEPS:
+    1. cd D:\Placement\Placement-Assistant
+    2. npm install
+    3. Create .env.local in root with all 4 keys (see Section 3)
+    4. npm run dev
+    5. Open: http://localhost:9002
+
+  OPTIONAL (AI flow debugging):
+    npm run genkit:dev
+    Open Genkit Dev UI at: http://localhost:4000
+
+--------------------------------------------------------------------------------
+SECTION 16: COMPONENT PATTERNS USED EVERYWHERE
+--------------------------------------------------------------------------------
+
+  SCORE CHART (src/components/app/score-chart.tsx):
+    Uses recharts RadialBarChart
+    Props: score (0-100)
+    Color: primary purple gradient
+    Displays score number in center
+
+  HEADER (src/components/app/header.tsx):
+    Contains SidebarTrigger (hamburger button)
+    Sticky at top, backdrop-blur
+
+  TOAST NOTIFICATIONS:
+    import { useToast } from "@/hooks/use-toast";
+    const { toast } = useToast();
+    toast({ title, description, variant: 'destructive' | 'default' })
+    Displayed by <Toaster /> mounted in layout.tsx
+
+  TRANSITION PATTERN (async state with pending):
+    const [isPending, startTransition] = useTransition();
+    startTransition(async () => { ... })
+    All AI calls and API fetches use this pattern
+
+  GLASSMORPHISM CARD (local component in each page):
+    const GlassmorphismCard = ({ children, className, ...props }) => (
+      <Card className={cn(
+        "bg-card/50 backdrop-blur-xl border-white/10 rounded-2xl shadow-lg
+         transition-all duration-300 hover:border-white/20 hover:shadow-primary/10",
+        className
+      )} {...props}>
+        {children}
+      </Card>
+    );
+
+  ANIMATION VARIANTS (framer-motion, used in most pages):
+    const cardVariants = {
+      hidden: { opacity: 0, y: 20 },
+      visible: { opacity: 1, y: 0, transition: { staggerChildren: 0.1 } },
+    };
+    Usage: <motion.div initial="hidden" animate="visible" variants={cardVariants}>
+
+--------------------------------------------------------------------------------
+SECTION 17: FUTURE FEATURES (PLANNED / STUBS)
+--------------------------------------------------------------------------------
+
+  Career Pathway — Salary Insights button (currently disabled):
+    Shows: "Approx: ₹8-15 LPA (current)"
+    Planned: Real salary data API integration
+
+  Career Pathway — Career Roadmap button (currently disabled):
+    Shows: "AI-generated path to mastery"
+    Planned: Genkit flow to generate step-by-step skill roadmap
+
+  OTHER IDEAS:
+    - Job Finder page (JSearch / Remotive API)
+    - Firebase Authentication (user accounts + resume storage)
+    - Resume version history + diff comparison
+    - LinkedIn profile URL analysis
+    - Aptitude test generator for placement rounds (quant, verbal, coding)
+    - Company-specific interview prep modules (TCS, Infosys, Wipro, etc.)
+    - Mock Group Discussion (GD) with AI
+    - Campus placement calendar + push notifications
+    - Multilingual support (Tamil, Hindi)
+    - Mobile app (React Native)
+    - ATS score for specific job posting (paste JD → match score)
+
+================================================================================
+END OF PROMPT — PLACEMENT ASSISTANT — FULL REBUILD SPECIFICATION
+================================================================================
