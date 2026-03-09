@@ -30,10 +30,10 @@ const GlassmorphismCard = ({ children, className, ...props }: React.ComponentPro
 const initialFormData = {
     name: "Sai",
     role: "Full Stack Developer | AI Enthusiast",
-    email: "saitharik@email.com",
+    email: "sai@email.com",
     phone: "+91-9876543210",
     location: "Chennai, India",
-    linkedin: "linkedin.com/in/saitharik",
+    linkedin: "linkedin.com/in/sai",
     portfolio: "sai.dev",
     degree: "B.Tech in Computer Science and Engineering",
     institution: "XYZ University",

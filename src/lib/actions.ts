@@ -8,6 +8,29 @@ import { generateQuestions, evaluateAnswer } from '@/ai/flows/interview-coach';
 import { generateResume } from '@/ai/flows/resume-generator';
 import type { ResumeGeneratorInput, ResumeGeneratorOutput } from '@/ai/flows/resume-generator';
 
+// Helper to parse API errors and provide user-friendly messages
+function parseAPIError(error: any): string {
+  const errorMessage = error?.message || String(error);
+  
+  if (errorMessage.includes('429') || errorMessage.includes('Too Many Requests') || errorMessage.includes('Quota exceeded')) {
+    return 'Too many requests. Please wait 30 seconds and try again. The free tier has rate limits.';
+  }
+  
+  if (errorMessage.includes('403') || errorMessage.includes('Forbidden') || errorMessage.includes('leaked')) {
+    return 'API key is invalid or blocked. Please check your environment configuration.';
+  }
+  
+  if (errorMessage.includes('401') || errorMessage.includes('Unauthorized')) {
+    return 'API authentication failed. Please verify your API key in .env.local file.';
+  }
+  
+  if (errorMessage.includes('400') || errorMessage.includes('Bad Request')) {
+    return 'Invalid request. Please check your input and try again.';
+  }
+  
+  return 'An unexpected error occurred. Please try again later.';
+}
+
 
 // Define the types within the action file since they can't be exported from the 'use server' file.
 type GenerateQuestionsInput = {
@@ -30,7 +53,7 @@ export async function analyzeResumeAction(
     return result;
   } catch (error) {
     console.error('Error in analyzeResumeAction:', error);
-    throw new Error('Failed to analyze resume. The API key might be invalid or missing.');
+    throw new Error(parseAPIError(error));
   }
 }
 
@@ -42,7 +65,7 @@ export async function getLearningSuggestionsAction(
     return result;
   } catch (error) {
     console.error('Error in getLearningSuggestionsAction:', error);
-    throw new Error('Failed to get learning suggestions.');
+    throw new Error(parseAPIError(error));
   }
 }
 
@@ -54,7 +77,7 @@ export async function generateQuestionsAction(
     return result;
   } catch (error) {
     console.error('Error in generateQuestionsAction:', error);
-    throw new Error('Failed to generate interview questions.');
+    throw new Error(parseAPIError(error));
   }
 }
 
@@ -66,7 +89,7 @@ export async function evaluateAnswerAction(
         return result;
     } catch (error) {
         console.error('Error in evaluateAnswerAction:', error);
-        throw new Error('Failed to evaluate your answer.');
+        throw new Error(parseAPIError(error));
     }
 }
 
@@ -78,6 +101,6 @@ export async function generateResumeAction(
         return result;
     } catch (error) {
         console.error('Error in generateResumeAction:', error);
-        throw new Error('Failed to generate resume.');
+        throw new Error(parseAPIError(error));
     }
 }
