@@ -22,10 +22,6 @@ const SuggestYouTubeVideosOutputSchema = z.object({
 });
 export type SuggestYouTubeVideosOutput = z.infer<typeof SuggestYouTubeVideosOutputSchema>;
 
-export async function suggestYouTubeVideos(input: SuggestYouTubeVideosInput): Promise<SuggestYouTubeVideosOutput> {
-  return suggestYouTubeVideosFlow(input);
-}
-
 const prompt = ai.definePrompt({
   name: 'suggestYouTubeVideosPrompt',
   input: {schema: SuggestYouTubeVideosInputSchema},
@@ -54,3 +50,7 @@ const suggestYouTubeVideosFlow = ai.defineFlow(
     }
   }
 );
+
+export async function suggestYouTubeVideos(input: SuggestYouTubeVideosInput): Promise<SuggestYouTubeVideosOutput> {
+  return suggestYouTubeVideosFlow(input);
+}

@@ -35,12 +35,6 @@ const ResumeScoringAndFeedbackOutputSchema = z.object({
 });
 export type ResumeScoringAndFeedbackOutput = z.infer<typeof ResumeScoringAndFeedbackOutputSchema>;
 
-export async function resumeScoringAndFeedback(
-  input: ResumeScoringAndFeedbackInput
-): Promise<ResumeScoringAndFeedbackOutput> {
-  return resumeScoringAndFeedbackFlow(input);
-}
-
 const prompt = ai.definePrompt({
   name: 'resumeScoringAndFeedbackPrompt',
   input: {schema: ResumeScoringAndFeedbackInputSchema},
@@ -70,3 +64,9 @@ const resumeScoringAndFeedbackFlow = ai.defineFlow(
     return output!;
   }
 );
+
+export async function resumeScoringAndFeedback(
+  input: ResumeScoringAndFeedbackInput
+): Promise<ResumeScoringAndFeedbackOutput> {
+  return resumeScoringAndFeedbackFlow(input);
+}

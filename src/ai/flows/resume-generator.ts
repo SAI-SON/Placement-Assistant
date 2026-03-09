@@ -47,10 +47,6 @@ const ResumeGeneratorOutputSchema = z.object({
 });
 export type ResumeGeneratorOutput = z.infer<typeof ResumeGeneratorOutputSchema>;
 
-export async function generateResume(input: ResumeGeneratorInput): Promise<ResumeGeneratorOutput> {
-  return resumeGeneratorFlow(input);
-}
-
 const resumeGeneratorPrompt = ai.definePrompt({
   name: 'resumeGeneratorPrompt',
   input: { schema: ResumeGeneratorInputSchema },
@@ -133,3 +129,7 @@ const resumeGeneratorFlow = ai.defineFlow(
     return output!;
   }
 );
+
+export async function generateResume(input: ResumeGeneratorInput): Promise<ResumeGeneratorOutput> {
+  return resumeGeneratorFlow(input);
+}

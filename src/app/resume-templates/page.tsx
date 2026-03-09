@@ -60,9 +60,6 @@ export default function ResumeTemplatesPage() {
   
   useEffect(() => {
     setIsClient(true);
-    if (!generatedResume && !isPending) {
-        handleGenerateResume(initialFormData);
-    }
   }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
