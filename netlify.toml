@@ -1,0 +1,43 @@
+# Netlify Configuration for Next.js with Server Actions
+# This project uses Next.js Server Actions which require server runtime
+
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+# Enable Next.js runtime support for Server Actions
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# Environment variables (add these in Netlify dashboard)
+# GEMINI_API_KEY
+# GOOGLE_GENAI_API_KEY
+# NEWS_API_KEY
+# YOUTUBE_API_KEY
+
+# Redirect rules
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Function configuration for Server Actions
+[functions]
+  # Increase timeout for AI operations (max 26 seconds on free tier)
+  node_bundler = "esbuild"
+  
+  # External dependencies that should not be bundled
+  external_node_modules = [
+    "genkit",
+    "@genkit-ai/google-genai",
+    "@genkit-ai/core",
+    "@genkit-ai/next"
+  ]
+
+# Headers for security and CORS
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"

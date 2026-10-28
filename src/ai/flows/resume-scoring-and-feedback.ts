@@ -8,7 +8,7 @@
  * - ResumeScoringAndFeedbackOutput - The return type for the resumeScoringAndFeedback function.
  */
 
-import {ai} from '@/ai/genkit';
+import {ai, executePromptWithFallback} from '@/ai/genkit';
 import {z} from 'genkit';
 
 const ResumeScoringAndFeedbackInputSchema = z.object({
@@ -60,8 +60,10 @@ const resumeScoringAndFeedbackFlow = ai.defineFlow(
     outputSchema: ResumeScoringAndFeedbackOutputSchema,
   },
   async input => {
-    const {output} = await prompt(input);
-    return output!;
+    return executePromptWithFallback<ResumeScoringAndFeedbackInput, ResumeScoringAndFeedbackOutput>(
+      prompt,
+      input
+    );
   }
 );
 

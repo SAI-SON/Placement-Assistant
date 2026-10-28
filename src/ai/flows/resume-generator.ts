@@ -4,7 +4,7 @@
  * @fileOverview An AI agent that generates a professional resume from user-provided data.
  */
 
-import { ai } from '@/ai/genkit';
+import { ai, executePromptWithFallback } from '@/ai/genkit';
 import { z } from 'zod';
 
 const ContactSchema = z.object({
@@ -125,8 +125,10 @@ const resumeGeneratorFlow = ai.defineFlow(
     outputSchema: ResumeGeneratorOutputSchema,
   },
   async input => {
-    const { output } = await resumeGeneratorPrompt(input);
-    return output!;
+    return executePromptWithFallback<ResumeGeneratorInput, ResumeGeneratorOutput>(
+      resumeGeneratorPrompt,
+      input
+    );
   }
 );
 

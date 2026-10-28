@@ -7,7 +7,7 @@
  * - evaluateAnswer - Evaluates a user's answer to a question.
  */
 
-import {ai} from '@/ai/genkit';
+import {ai, executePromptWithFallback} from '@/ai/genkit';
 import {z} from 'genkit';
 
 // Define schemas for structured input and output
@@ -87,8 +87,10 @@ const generateQuestionsFlow = ai.defineFlow(
     outputSchema: InterviewPlanSchema,
   },
   async (input) => {
-    const {output} = await generateQuestionsPrompt(input);
-    return output!;
+    return executePromptWithFallback<GenerateQuestionsInput, z.infer<typeof InterviewPlanSchema>>(
+      generateQuestionsPrompt,
+      input
+    );
   }
 );
 
@@ -99,8 +101,10 @@ const evaluateAnswerFlow = ai.defineFlow(
       outputSchema: AnswerEvaluationSchema,
     },
     async (input) => {
-      const {output} = await evaluateAnswerPrompt(input);
-      return output!;
+      return executePromptWithFallback<EvaluateAnswerInput, z.infer<typeof AnswerEvaluationSchema>>(
+        evaluateAnswerPrompt,
+        input
+      );
     }
 );
 

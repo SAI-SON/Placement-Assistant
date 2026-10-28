@@ -8,7 +8,7 @@
  * - SuggestYouTubeVideosOutput - The return type for the suggestYouTubeVideos function.
  */
 
-import {ai} from '@/ai/genkit';
+import {ai, executePromptWithFallback} from '@/ai/genkit';
 import {z} from 'genkit';
 
 const SuggestYouTubeVideosInputSchema = z.object({
@@ -43,8 +43,8 @@ const suggestYouTubeVideosFlow = ai.defineFlow(
   },
   async input => {
     if (input.resumeScore < 70) {
-      const {output} = await prompt(input);
-      return {videoSuggestions: output!.videoSuggestions};
+      const output = await executePromptWithFallback<SuggestYouTubeVideosInput, SuggestYouTubeVideosOutput>(prompt, input);
+      return {videoSuggestions: output.videoSuggestions || []};
     } else {
       return {videoSuggestions: []};
     }
