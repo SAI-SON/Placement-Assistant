@@ -4,14 +4,14 @@
 
 ### Next-Gen AI-Powered Career Copilot, ATS Diagnostics & Technical Interview Simulator
 
-[![Live Demo](https://img.shields.io/badge/Demo-placement--assistant.netlify.app-00DC82?style=for-the-badge&logo=netlify&logoColor=white)](https://placement-assistant.netlify.app)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-placement--assistant--five.vercel.app-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://placement-assistant-five.vercel.app/)
 [![Next.js 15](https://img.shields.io/badge/Next.js-15.5-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
 [![Google Gemini](https://img.shields.io/badge/Google_Gemini-3.5_Flash-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://aistudio.google.com/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 
-[**🌐 Explore Live Demo**](https://placement-assistant.netlify.app) • [**📖 Design Specs**](DESIGN.md) • [**🚀 Deployment Guide**](DEPLOYMENT.md) • [**🐛 Report Bug**](https://github.com/SAI-SON/Placement-Assistant/issues)
+[**🌐 Explore Live Demo**](https://placement-assistant-five.vercel.app/) • [**🐛 Report Bug**](https://github.com/SAI-SON/Placement-Assistant/issues)
 
 </div>
 
@@ -27,9 +27,9 @@ Styled with a bespoke **Obsidian & Cyberpunk Glassmorphism** design system, Plac
 
 ## 🚀 Live Demo
  
-Experience the live application deployed on Netlify:
+Experience the live application deployed on Vercel:
 
-👉 **[https://placement-assistant.netlify.app](https://placement-assistant.netlify.app)**
+👉 **[https://placement-assistant-five.vercel.app/](https://placement-assistant-five.vercel.app/)**
 
 ---
 
