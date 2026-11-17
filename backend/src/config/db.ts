@@ -3,7 +3,14 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const connectionString = process.env.DATABASE_URL || 'postgresql://postgres:saison@2005@localhost:5432/Placement';
+let rawConnectionString = process.env.DATABASE_URL || 'postgresql://postgres:saison@2005@localhost:5432/Placement';
+
+// Auto-clean Neon pooler URLs for robust DDL transaction support
+if (rawConnectionString.includes('-pooler.') && rawConnectionString.includes('neon.tech')) {
+  rawConnectionString = rawConnectionString.replace('-pooler.', '.');
+}
+
+const connectionString = rawConnectionString;
 
 const isProductionOrCloud =
   process.env.NODE_ENV === 'production' ||
@@ -18,7 +25,7 @@ export const pool = new Pool({
   connectionString,
   max: 20,
   idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 5000,
+  connectionTimeoutMillis: 15000,
   ssl: isProductionOrCloud ? { rejectUnauthorized: false } : undefined,
 });
 
