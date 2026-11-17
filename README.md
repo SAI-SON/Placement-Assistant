@@ -26,7 +26,7 @@ Styled with a bespoke **Obsidian & Cyberpunk Glassmorphism** design system, Plac
 ---
 
 ## 🚀 Live Demo
-
+ 
 Experience the live application deployed on Netlify:
 
 👉 **[https://placement-assistant.netlify.app](https://placement-assistant.netlify.app)**
@@ -159,13 +159,14 @@ graph TD
 
 | Command | Purpose |
 | :--- | :--- |
-| `npm run dev` | Starts the Next.js development server on port `9002` |
-| `npm run build` | Compiles optimized production bundle |
-| `npm run start` | Runs the production build locally |
-| `npm run typecheck` | Validates TypeScript types across the entire codebase |
-| `npm run lint` | Runs ESLint analysis |
-| `npm run lint:fix` | Automatically fixes ESLint style issues |
-| `npm run optimize` | Runs typechecks and linter fixes in one command |
+| `npm run dev` | Starts both backend API (`:5000`) and frontend Next.js (`:9002`) concurrently |
+| `npm run dev:backend` | Starts Express + PostgreSQL backend development server on port `5000` |
+| `npm run dev:frontend` | Starts Next.js 15 frontend on port `9002` |
+| `npm run db:migrate` | Runs database migration script (creates/updates all PostgreSQL tables) |
+| `npm run db:seed` | Seeds database with demo candidate (`alex@placement.com`) and admin |
+| `npm run db:reset` | Drops and cleanly rebuilds all tables from scratch |
+| `npm run build` | Builds both backend (tsc) and frontend (Next.js) |
+| `npm run typecheck` | Validates TypeScript across both backend and frontend |
 
 ---
 
@@ -198,32 +199,50 @@ For detailed step-by-step guides, refer to [DEPLOYMENT.md](DEPLOYMENT.md).
 
 ```
 Placement-Assistant/
-├── .env.example              # Environment variables template
-├── DESIGN.md                 # Design system tokens & aesthetics documentation
-├── DEPLOYMENT.md             # Production deployment instructions
-├── netlify.toml              # Netlify Next.js runtime configuration
-├── package.json              # Scripts and dependencies
-├── src/
-│   ├── ai/
-│   │   ├── genkit.ts         # Genkit configuration & multi-model failover
-│   │   ├── ai-feedback-chat.ts # Career Coach prompt & flow
-│   │   └── flows/            # ATS scoring, interview, and resume flows
-│   ├── app/
-│   │   ├── layout.tsx        # Root layout, fonts, and GPU background
-│   │   ├── globals.css       # Glassmorphism utilities & theme tokens
-│   │   ├── page.tsx          # Executive Candidate Dashboard
-│   │   ├── upload-resume/    # ATS Diagnostic & Resume Analysis
-│   │   ├── ai-coach/         # Interactive AI Mentor Chat
-│   │   ├── ai-interview-coach/ # 4-Stage Mock Interview Simulator
-│   │   ├── resume-templates/ # Markdown Resume Builder & PDF Export
-│   │   ├── career-pathway/   # Learning Roadmaps & Video Masterclasses
-│   │   └── job-news/         # Regional Tech Hiring & News Feed
-│   ├── components/
-│   │   ├── app/              # Header, Sidebar, ScoreChart, GlassCards
-│   │   └── ui/               # Radix UI primitive components
-│   └── lib/
-│       ├── actions.ts        # Server Actions & API error sanitizer
-│       └── utils.ts          # Class merging and string utilities
+├── package.json              # Monorepo root workspace orchestrator
+├── backend/                  # Node.js + Express + PostgreSQL Backend
+│   ├── package.json          # Express dependencies (pg, cors, @google/generative-ai)
+│   ├── tsconfig.json         # TypeScript configuration for backend
+│   ├── .env                  # Backend env (DATABASE_URL, GEMINI_API_KEY, PORT=5000)
+│   └── src/
+│       ├── server.ts         # Express server setup, CORS & JSON limits
+│       ├── config/
+│       │   └── db.ts         # PostgreSQL pool & auto-table initializations
+│       ├── controllers/      # Handlers for resume, interview, coach, learning, news, youtube
+│       ├── routes/           # Express router endpoints (/api/*)
+│       └── services/
+│           └── geminiService.ts # Gemini AI multi-model failover integration
+└── frontend/                 # Next.js 15 App Router Frontend
+    ├── package.json          # Next.js dependencies
+    ├── next.config.ts        # Next.js rewrites & external packages
+    ├── tailwind.config.ts    # Design tokens & font configurations
+    ├── .env.local            # Frontend environment (NEXT_PUBLIC_API_URL=http://localhost:5000)
+    └── src/
+        ├── app/              # Dashboard, ATS scanner, interview coach, resume builder
+        ├── components/       # UI primitives & custom HUD components
+        └── lib/              # Client & server actions communicating with Express API
+```
+
+---
+
+## 💻 Running Frontend and Backend
+
+### 1. Run Everything Simultaneously (Root Monorepo Command):
+```bash
+npm run dev
+```
+- **Backend API**: `http://localhost:5000` (Node.js + Express + PostgreSQL)
+- **Frontend App**: `http://localhost:9002` (Next.js 15)
+
+### 2. Run Individually:
+```bash
+# Start Express & PostgreSQL Backend Only:
+npm run dev:backend
+# or: cd backend && npm run dev
+
+# Start Next.js Frontend Only:
+npm run dev:frontend
+# or: cd frontend && npm run dev
 ```
 
 ---
